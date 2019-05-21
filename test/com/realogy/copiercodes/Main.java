@@ -1,5 +1,8 @@
 package com.realogy.copiercodes;
 
+import com.realogy.copiercodes.AddUser;
+import com.realogy.copiercodes.UserSearch;
+
 import java.util.Scanner;
 
 public class Main {
@@ -14,10 +17,10 @@ public class Main {
 
         switch (s) {
             case "1":
-                AddUser add = new AddUser();
+                com.realogy.copiercodes.AddUser add = new AddUser();
                 break;
             case "2":
-                UserSearch search = new UserSearch();
+                com.realogy.copiercodes.UserSearch search = new UserSearch();
                 break;
             default:
                 System.out.println("Not an available option.");
