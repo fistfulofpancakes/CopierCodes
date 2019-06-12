@@ -19,6 +19,9 @@ public class Main {
             case "2":
                 UserSearch search = new UserSearch();
                 break;
+            case "9":
+                ChangeCode change = new ChangeCode();
+                break;
             default:
                 System.out.println("Not an available option.");
         }

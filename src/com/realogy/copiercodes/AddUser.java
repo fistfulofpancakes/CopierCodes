@@ -17,8 +17,22 @@ public class AddUser {
         firstName = clean(sc.next());
         System.out.print("Enter the user's last name: ");
         lastName = clean(sc.next());
-        System.out.print("Enter the user's office: ");
-        office = clean(sc.next());
+        System.out.println("Enter the user's office: ");
+        System.out.println("1.) Camp Hill");
+        System.out.println("2.) Carlisle");
+        System.out.println("3.) Chambersburg");
+        System.out.println("4.) Dillsburg");
+        System.out.println("5.) Greencastle");
+        System.out.println("6.) Harrisburg");
+        System.out.println("7.) Hershey");
+        System.out.println("8.) Kutztown");
+        System.out.println("9.) Lancaster");
+        System.out.println("10.) Lebanon");
+        System.out.println("11.) New Bloomfield");
+        System.out.println("12.) Waynesboro");
+        System.out.println("13.) Wyomissing");
+        System.out.println("14.) York");
+        office = office(sc.nextInt());
 
         code = (int)(Math.random()*((99999 - 10000) + 1)) + 10000;
 
@@ -61,6 +75,41 @@ public class AddUser {
         String cleanName = name.trim();
         cleanName = cleanName.substring(0,1).toUpperCase() + cleanName.substring(1).toLowerCase();
         return cleanName;
+    }
+
+    private String office(int officeCode) {
+        String office = null;
+        switch (officeCode) {
+            case 1: office = "Camp_Hill";
+            break;
+            case 2: office = "Carlisle";
+            break;
+            case 3: office = "Chambersburg";
+            break;
+            case 4: office = "Dillsburg";
+            break;
+            case 5: office = "Greencastle";
+            break;
+            case 6: office = "Harrisburg";
+            break;
+            case 7: office = "Hershey";
+            break;
+            case 8: office = "Kutztown";
+            break;
+            case 9: office = "Lancaster";
+            break;
+            case 10: office = "Lebanon";
+            break;
+            case 11: office = "New_Bloomfield";
+            break;
+            case 12: office = "Waynesboro";
+            break;
+            case 13: office = "Wyomissing";
+            break;
+            case 14: office = "York";
+            break;
+        }
+        return office;
     }
 
     private void cls() {

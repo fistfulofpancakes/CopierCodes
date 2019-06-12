@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="CopierCodes:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/CopierCodes_jar</output-path>
+  <artifact type="jar" build-on-make="true" name="CopierCodes">
+    <output-path>$PROJECT_DIR$/out/artifacts/CopierCodes</output-path>
     <root id="archive" name="CopierCodes.jar">
       <element id="module-output" name="CopierCodes" />
     </root>

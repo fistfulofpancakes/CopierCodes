@@ -1,6 +1,9 @@
-package com.realogy.copiercodes;
+package test.realogy.copiercodes;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +30,7 @@ public class ChangeCode {
                if (!line.contains("DNU") && line.contains(input)) {
                    String[] lineArr = line.split(",");
                    matches.put(a, lineArr);
-                   System.out.println(a + ".) " + line);
+                   System.out.println(line + a);
                    a++;
                }
             } else {
