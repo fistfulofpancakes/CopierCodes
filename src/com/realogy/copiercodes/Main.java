@@ -4,15 +4,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
     private static String file = "codelist.csv";
-    static Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
     private static ArrayList<String> fileLines = new ArrayList<>();
     private static Map<Integer, String[]> matches = new HashMap<>();
 
@@ -43,7 +40,7 @@ public class Main {
         }
     }
 
-    static void fileToArray() {
+    private static void fileToArray() {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             while (true) {
                 String line = br.readLine();
@@ -56,7 +53,7 @@ public class Main {
         } catch (Exception e){e.getStackTrace();}
     }
 
-    static void arrayToFile() {
+    private static void arrayToFile() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (String s:fileLines) {
                 bw.write(s);
@@ -65,7 +62,7 @@ public class Main {
         } catch (Exception e){e.getStackTrace();}
     }
 
-    static void addUser() {
+    private static void addUser() {
         String firstName;
         String lastName;
         String office;
@@ -90,7 +87,7 @@ public class Main {
         System.out.println("12.) Waynesboro");
         System.out.println("13.) Wyomissing");
         System.out.println("14.) York");
-        office = officeOptions(sc.nextInt());
+        office = officeOptions(sc.next());
 
         int code = codeCreation();
 
@@ -110,8 +107,8 @@ public class Main {
         }
     }
 
-    static void searchUser() {
-        int i = search();
+    private static void searchUser() {
+        search();
 
         System.out.println("Would you like to search for another user? (Y/N)");
 
@@ -124,7 +121,7 @@ public class Main {
         }
     }
 
-    static int search() {
+    private static void search() {
         String input;
         int i = 1;
 
@@ -150,11 +147,9 @@ public class Main {
                 System.exit(0);
             }
         }
-
-        return i;
     }
 
-    static void changeCode() {
+    private static void changeCode() {
         search();
 
         System.out.print("Whose code would you like to change?: ");
@@ -189,43 +184,61 @@ public class Main {
         }
     }
 
-    private static String officeOptions(int officeCode) {
-        String office = null;
+    private static String officeOptions(String officeCode) {
+        String office;
         switch (officeCode) {
-            case 1: office = "Camp_Hill";
+            case "1":
+                office = "Camp_Hill";
                 break;
-            case 2: office = "Carlisle";
+            case "2":
+                office = "Carlisle";
                 break;
-            case 3: office = "Chambersburg";
+            case "3":
+                office = "Chambersburg";
                 break;
-            case 4: office = "Dillsburg";
+            case "4":
+                office = "Dillsburg";
                 break;
-            case 5: office = "Greencastle";
+            case "5":
+                office = "Greencastle";
                 break;
-            case 6: office = "Harrisburg";
+            case "6":
+                office = "Harrisburg";
                 break;
-            case 7: office = "Hershey";
+            case "7":
+                office = "Hershey";
                 break;
-            case 8: office = "Kutztown";
+            case "8":
+                office = "Kutztown";
                 break;
-            case 9: office = "Lancaster";
+            case "9":
+                office = "Lancaster";
                 break;
-            case 10: office = "Lebanon";
+            case "10":
+                office = "Lebanon";
                 break;
-            case 11: office = "New_Bloomfield";
+            case "11":
+                office = "New_Bloomfield";
                 break;
-            case 12: office = "Waynesboro";
+            case "12":
+                office = "Waynesboro";
                 break;
-            case 13: office = "Wyomissing";
+            case "13":
+                office = "Wyomissing";
                 break;
-            case 14: office = "York";
+            case "14":
+                office = "York";
                 break;
+            default:
+                System.out.println("That's not an available number.");
+                System.out.println("Please select user's office:");
+                office = officeOptions(sc.next());
         }
         return office;
     }
 
-    static int codeCreation() {
-        int code = (int)(Math.random()*((99999 - 10000) + 1)) + 10000;;
+    private static int codeCreation() {
+        int code = (int)(Math.random()*((99999 - 10000) + 1)) + 10000;
         for (String s : fileLines) {
             if (s.contains(String.valueOf(code))) {
                 codeCreation();
@@ -235,6 +248,9 @@ public class Main {
     }
 
     private static String clean(String name) {
+
+        //TODO: Modify this to work with Hyphenated names should ook like this - Nevins-Morningstar
+
         String cleanName = name.trim();
         cleanName = cleanName.substring(0,1).toUpperCase() + cleanName.substring(1).toLowerCase();
         return cleanName;
