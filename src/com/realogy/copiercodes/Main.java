@@ -107,83 +107,6 @@ public class Main {
         }
     }
 
-    private static void searchUser() {
-        search();
-
-        System.out.println("Would you like to search for another user? (Y/N)");
-
-        String input = sc.next().toLowerCase();
-
-        if (input.contains("y")) {
-            searchUser();
-        } else {
-            System.exit(0);
-        }
-    }
-
-    private static void search() {
-        String input;
-        int i = 1;
-
-        System.out.print("Enter user's first or last name: ");
-        input = clean(sc.next());
-
-        for (String s : fileLines) {
-            if (!s.contains("DNU") && s.contains(input)) {
-                String[] arr = s.split(",");
-                matches.put(i, arr);
-                System.out.println(i + ".) " + arr[3] + ": " + arr[1] + " " + arr[2] + " - " + arr[0]);
-                i++;
-            }
-        }
-
-        if (i == 1) {
-            System.out.println("No user found. Search again? (Y/N)");
-            input = sc.next().toLowerCase();
-
-            if (input.contains("y")) {
-                search();
-            } else {
-                System.exit(0);
-            }
-        }
-    }
-
-    private static void changeCode() {
-        search();
-
-        System.out.print("Whose code would you like to change?: ");
-
-        int b = sc.nextInt();
-
-        String[] array = matches.get(b);
-
-        int a = 0;
-        for (String s : fileLines) {
-            if (s.contains(array[0])) {
-                fileLines.set(a, s.concat(",DNU"));
-            }
-            a++;
-        }
-
-        int code = codeCreation();
-
-        fileLines.add(code + "," + array[1] + "," + array[2] +"," + array[3]);
-        arrayToFile();
-
-        System.out.println("The new code for " + array[1] + " " + array[2] + " is " + code + ".");
-        System.out.println();
-        System.out.println("Change another code (Y/N)");
-
-        String input = sc.next();
-
-        if(input.contains("y")) {
-            changeCode();
-        } else {
-            System.exit(0);
-        }
-    }
-
     private static String officeOptions(String officeCode) {
         String office;
         switch (officeCode) {
@@ -237,6 +160,100 @@ public class Main {
         return office;
     }
 
+    private static void searchUser() {
+        search();
+
+        System.out.println("Would you like to search for another user? (Y/N)");
+
+        String input = sc.next().toLowerCase();
+
+        if (input.contains("y")) {
+            searchUser();
+        } else {
+            System.exit(0);
+        }
+    }
+
+    private static void changeCode() {
+        String input;
+        int intput = 0;
+        search();
+
+        System.out.print("Whose code would you like to change?: ");
+
+        while (true) {
+            try {
+                intput = sc.nextInt();
+                if (intput > 0 && intput <= matches.size()) {
+                    break;
+                } else {
+                    System.out.println("Not a valid selection.");
+                    System.out.print("Whose code would you like to change?: ");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Not a valid selection.");
+                System.out.print("Whose code would you like to change?: ");
+                sc.nextLine();
+            }
+        }
+
+        String[] array = matches.get(intput);
+
+        int a = 0;
+        for (String s : fileLines) {
+            if (s.contains(array[0])) {
+                fileLines.set(a, s.concat(",DNU"));
+            }
+            a++;
+        }
+
+        int code = codeCreation();
+
+        fileLines.add(code + "," + array[1] + "," + array[2] +"," + array[3]);
+        arrayToFile();
+
+        System.out.println("The new code for " + array[1] + " " + array[2] + " is " + code + ".");
+        System.out.println();
+        System.out.println("Change another code (Y/N)");
+
+        input = sc.next();
+
+        if(input.contains("y")) {
+            matches.clear();
+            changeCode();
+        } else {
+            System.exit(0);
+        }
+    }
+
+    private static void search() {
+        String input;
+        int i = 1;
+
+        System.out.print("Enter user's first or last name: ");
+        input = clean(sc.next());
+
+        for (String s : fileLines) {
+            if (!s.contains("DNU") && s.contains(input)) {
+                String[] arr = s.split(",");
+                matches.put(i, arr);
+                System.out.println(i + ".) " + arr[3] + ": " + arr[1] + " " + arr[2] + " - " + arr[0]);
+                i++;
+            }
+        }
+
+        if (i == 1) {
+            System.out.println("No user found. Search again? (Y/N)");
+            input = sc.next().toLowerCase();
+
+            if (input.contains("y")) {
+                search();
+            } else {
+                System.exit(0);
+            }
+        }
+    }
+
     private static int codeCreation() {
         int code = (int)(Math.random()*((99999 - 10000) + 1)) + 10000;
         for (String s : fileLines) {
@@ -248,11 +265,17 @@ public class Main {
     }
 
     private static String clean(String name) {
+        String cleanName;
 
-        //TODO: Modify this to work with Hyphenated names should ook like this - Nevins-Morningstar
-
-        String cleanName = name.trim();
-        cleanName = cleanName.substring(0,1).toUpperCase() + cleanName.substring(1).toLowerCase();
+        if (name.contains("-")) {
+            String[] last = name.split("-");
+            last[0] = last[0].trim();
+            last[1] = last[1].trim();
+            cleanName = last[0].substring(0, 1).toUpperCase() + last[0].substring(1).toLowerCase() + "-" + last[1].substring(0, 1).toUpperCase() + last[1].substring(1).toLowerCase();
+        } else {
+            cleanName = name.trim();
+            cleanName = cleanName.substring(0, 1).toUpperCase() + cleanName.substring(1).toLowerCase();
+        }
         return cleanName;
     }
 
